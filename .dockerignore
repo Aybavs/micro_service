@@ -1,0 +1,50 @@
+# Git
+.git
+.gitignore
+
+# Go specific
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+/vendor/
+
+# Environment variables (except those needed for build)
+.env
+*.env
+!example.env
+
+# IDE specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Logs
+*.log
+logs/
+
+# Documentation
+README.md
+CONTRIBUTING.md
+LICENSE
+docs/
+
+# Docker
+.docker/
+Dockerfile
+docker-compose.yml
+*.dockerfile
+.dockerignore
+
+# Test files
+*_test.go
+**/test/
+
+# Other
+.git/
+.github/

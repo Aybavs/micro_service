@@ -1,0 +1,79 @@
+version: "4"
+services:
+  # ---------------------------
+  # 1) Consul (Service Discovery)
+  # ---------------------------
+  consul:
+    image: consul:1.15
+    container_name: consul
+    ports:
+      - "8500:8500"
+      - "8600:8600/udp"
+    command: agent -dev -client=0.0.0.0
+
+  # ---------------------------
+  # 2) PostgreSQL
+  # ---------------------------
+  postgres:
+    image: postgres:latest
+    container_name: postgres-db
+    env_file:
+      - .env
+    ports:
+      - "5432:5432"
+
+  # ---------------------------
+  # 3) MongoDB
+  # ---------------------------
+  mongo:
+    image: mongo:latest
+    container_name: mongo-db
+    ports:
+      - "27017:27017"
+    env_file:
+      - .env
+
+  # ---------------------------
+  # 4) User Service
+  # ---------------------------
+  user-service:
+    build: ./user-service
+    container_name: user-service
+    depends_on:
+      - postgres
+      - consul
+    env_file:
+      - .env
+    ports:
+      - "8001:8001" 
+
+  # ---------------------------
+  # 5) Product Service
+  # ---------------------------
+  product-service:
+    build: ./product-service
+    container_name: product-service
+    depends_on:
+      - mongo
+      - consul
+    env_file:
+      - .env
+    ports:
+      - "8002:8002" 
+
+  # ---------------------------
+  # 6) Gateway
+  # ---------------------------
+  gateway:
+    build: ./gateway
+    container_name: gateway
+    depends_on:
+      - user-service
+      - product-service
+      - consul
+    ports:
+      - "8000:8000"
+
+networks:
+  default:
+    name: mikroservis-network

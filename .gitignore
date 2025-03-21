@@ -1,0 +1,42 @@
+# Go specific
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+/vendor/
+go.work
+
+# Environment variables and secrets
+.env
+*.env
+!example.env
+*.pem
+*.key
+
+# Binaries
+bin/
+build/
+
+# IDE specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Logs
+*.log
+logs/
+
+# Database files
+*.db
+
+# Test coverage
+coverage.txt
+profile.out
+
+# Docker
+.docker/data/
